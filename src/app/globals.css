@@ -1,26 +1,185 @@
-@import "tailwindcss";
+@import url("https://fonts.cdnfonts.com/css/pp-neue-montreal");
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #fff;
+  --fg: #1a1a1a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+::-webkit-scrollbar {
+  display: none;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "PP Neue Montreal", sans-serif;
+  background-color: #000;
+  color: var(--fg);
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+.navbar-items {
+  display: flex;
+  gap: clamp(1rem, 4vw, 2rem);
+}
+
+.navbar-item {
+  padding: 1.5rem;
+}
+
+.navbar-item a {
+  text-decoration: none;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.home {
+  width: 100%;
+  height: 100svh;
+  background-color: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.home h1 {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  color: var(--fg);
+  font-size: 20vw;
+  font-weight: bolder;
+  line-height: 1;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.projects {
+  width: 100%;
+  height: 100svh;
+  overflow-y: auto;
+}
+
+.projects-container {
+  width: 100%;
+  min-height: 100svh;
+  background-color: var(--bg);
+  padding: 15rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.projects-container h1 {
+  font-size: 15vw;
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: var(--fg);
+}
+
+.info {
+  width: 100%;
+  height: 100%;
+  min-height: 100svh;
+  background-color: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.col {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col h1 {
+  font-size: 15vw;
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: var(--fg);
+}
+
+.col p {
+  font-weight: 500;
+  font-size: 2rem;
+  color: var(--fg);
+}
+
+@media (max-width: 1000px) {
+  .info {
+    flex-direction: column;
+  }
+
+  .info p {
+    font-size: 1.25rem;
+  }
+}
+
+::view-transition-group(navbar) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(.page-exit) {
+  animation: 1600ms cubic-bezier(0.65, 0, 0.35, 1) both page-out;
+}
+
+::view-transition-new(.page-enter) {
+  animation: 1500ms cubic-bezier(0.65, 0, 0.35, 1) both page-in;
+  animation-delay: 0.25s;
+}
+
+@keyframes page-out {
+  0% {
+    transform: translateX(0%) translateY(0%) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(0%) translateY(0%) rotate(0deg) scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(-50%) translateY(20%) rotate(-10deg) scale(0.65);
+    opacity: 0.25;
+  }
+}
+
+@keyframes page-in {
+  from {
+    transform: translateX(100%) translateY(20%);
+    clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%);
+  }
+  to {
+    transform: translateX(0%) translateY(0%);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
 }

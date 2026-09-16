@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tilt Slide Template
+
+A minimal, modern Next.js starter template demonstrating editorial tilt-and-slide page transitions powered by the native **View Transition API** and **React 19**.
+
+## Features
+
+- **Native View Transitions**: Smooth, browser-native page navigation using CSS keyframes (`page-out` tilted scale exit and `page-in` diagonal clip-path entrance).
+- **React 19 `<ViewTransition>`**: Seamless route transition orchestration in Next.js App Router using `template.tsx`.
+- **TypeScript**: 100% typed codebase with zero external runtime animation libraries required.
+- **Clean & Lightweight**: Minimal boilerplate with static route placeholders ready for custom content and assets.
+- **Turbopack Ready**: Configured for Next.js with React Compiler and Turbopack support.
+
+## Project Structure
+
+```text
+src/
+├── app/
+│   ├── about/
+│   │   └── page.tsx        # About page route
+│   ├── info/
+│   │   └── page.tsx        # Info page route
+│   ├── projects/
+│   │   └── page.tsx        # Projects page route
+│   ├── globals.css         # Transition styles, keyframes, and global CSS
+│   ├── layout.tsx          # Root layout and persistent Navbar wrapper
+│   ├── page.tsx            # Home page route
+│   └── template.tsx        # ViewTransition wrapper for route transitions
+└── components/
+    └── Navbar.tsx          # Fixed navigation bar with viewTransitionName
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- [Node.js](https://nodejs.org) (v18.17+ or later) or [Bun](https://bun.sh) (v1.0+)
+
+### Installation
+
+Clone the repository and install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
+# or npm install / pnpm install / yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run the local development server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+bun dev
+# or npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000) with your browser to preview the template.
 
-To learn more about Next.js, take a look at the following resources:
+### Production Build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create an optimized production build:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+bun run build
+bun start
+```
 
-## Deploy on Vercel
+## How It Works
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Persistent Navbar**: `src/components/Navbar.tsx` assigns `style={{ viewTransitionName: "navbar" }}` to keep navigation fixed in place while content transitions underneath.
+2. **Page View Transition Wrapper**: `src/app/template.tsx` wraps every route with `<ViewTransition enter="page-enter" exit="page-exit" default="none">`, re-evaluating on navigation between sibling routes.
+3. **Transition Keyframes**: `src/app/globals.css` specifies the custom pseudo-element animations:
+   - `::view-transition-old(.page-exit)`: Tilts, shrinks, and slides the exiting view downwards with easing.
+   - `::view-transition-new(.page-enter)`: Slides in the entering view with an expanding diagonal polygon `clip-path`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Customization
+
+- **Add New Pages**: Create a folder in `src/app/<route>/page.tsx` and add corresponding navigation links inside `src/components/Navbar.tsx`.
+- **Adjust Transition Timing**: Edit the duration and cubic-bezier easing curves inside `src/app/globals.css`.
+
+## License
+
+MIT
